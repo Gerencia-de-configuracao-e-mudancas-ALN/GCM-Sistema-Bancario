@@ -12,6 +12,6 @@ public class BankController {
     }
 
     public double debit(int accountNumber, double value) {
-        return bankService.debit(accountNumber, value);
+        return bankService.realizeDebit(accountNumber, value);
     }
 }

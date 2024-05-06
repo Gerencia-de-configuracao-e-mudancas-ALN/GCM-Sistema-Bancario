@@ -14,9 +14,8 @@ public class BankRepository {
         accounts.put(account.getAccountNumber(), account);
     }
 
-    public double realizeDebit(int accountNumber, double value) {
-        Account selectedAccount = accounts.get(accountNumber);
-        selectedAccount.setBalance(selectedAccount.getBalance() - value);
-        return selectedAccount.getBalance();
+    public Account getAccountByAccountNumber(int accountNumber) {
+        return accounts.get(accountNumber);
     }
+
 }

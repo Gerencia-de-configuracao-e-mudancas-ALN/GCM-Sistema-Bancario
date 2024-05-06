@@ -12,7 +12,10 @@ public class BankService {
         bankRepository.saveAccount(account);
     }
 
-    public double debit(int accountNumber, double value) {
-        return bankRepository.realizeDebit(accountNumber, value);
+    public double realizeDebit(int accountNumber, double value) {
+        Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
+        selectedAccount.setBalance(selectedAccount.getBalance() - value);
+        bankRepository.saveAccount(selectedAccount);
+        return selectedAccount.getBalance();
     }
 }
