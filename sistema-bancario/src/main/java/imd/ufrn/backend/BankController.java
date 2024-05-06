@@ -12,7 +12,7 @@ public class BankController {
     }
 
     public double debit(int accountNumber, double value) {
-        return bankService.debit(accountNumber, value);
+        return bankService.realizeDebit(accountNumber, value);
     }
 
     public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value){
