@@ -41,6 +41,9 @@ public class BankTerminalPresentation {
                 case 2:
                     realizeDebit();
                     break;
+                case 4:
+                    realizeTransfer();
+                    break;
                 default:
                     wrongOption();
                     break;
@@ -75,6 +78,7 @@ public class BankTerminalPresentation {
         System.out.println("    0- Sair");
         System.out.println("    1- Criar conta");
         System.out.println("    2- Realizar débito");
+        System.out.println("    4- Realizar transferência");
 
         return scanner.nextInt();
     }
@@ -101,4 +105,18 @@ public class BankTerminalPresentation {
         System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance);
     }
 
+    public void realizeTransfer() {
+        System.out.println("Digite o número da conta de origem: ");
+        int originAccountNumber = scanner.nextInt();
+        System.out.println("Digite o número da conta de destino: ");
+        int destinationAccountNumber = scanner.nextInt();
+        System.out.println("Digite o valor a ser transferido: ");
+        double valueToTransfer = scanner.nextDouble();
+        boolean isSuccess = bankController.transfer(originAccountNumber, destinationAccountNumber, valueToTransfer);
+        if (isSuccess) {
+            System.out.println("Valor transferido com sucesso!");
+        } else {
+            System.out.println("Falha ao transferir");
+        }
+    }
 }

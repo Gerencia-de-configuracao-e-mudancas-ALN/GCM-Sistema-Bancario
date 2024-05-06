@@ -19,4 +19,11 @@ public class BankRepository {
         selectedAccount.setBalance(selectedAccount.getBalance() - value);
         return selectedAccount.getBalance();
     }
+
+    public boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value){
+        Account destinationAccount = accounts.get(destinationAccountNumber);
+        realizeDebit(originAccountNumber, value);
+        destinationAccount.setBalance(destinationAccount.getBalance() + value);
+        return true;
+    }
 }

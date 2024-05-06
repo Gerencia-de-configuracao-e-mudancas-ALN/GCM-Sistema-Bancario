@@ -14,4 +14,8 @@ public class BankController {
     public double debit(int accountNumber, double value) {
         return bankService.debit(accountNumber, value);
     }
+
+    public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value){
+        return bankService.transfer(originAccountNumber, destinationAccountNumber, value);
+    }
 }

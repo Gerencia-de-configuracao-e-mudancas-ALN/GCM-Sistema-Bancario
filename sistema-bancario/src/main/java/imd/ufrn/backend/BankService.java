@@ -15,4 +15,8 @@ public class BankService {
     public double debit(int accountNumber, double value) {
         return bankRepository.realizeDebit(accountNumber, value);
     }
+
+    public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value){
+        return bankRepository.realizeTransfer(originAccountNumber, destinationAccountNumber, value);
+    }
 }
