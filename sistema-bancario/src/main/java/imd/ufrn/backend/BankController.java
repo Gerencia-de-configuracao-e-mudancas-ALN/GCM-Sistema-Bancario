@@ -10,4 +10,8 @@ public class BankController {
     public void createAccount(int accountNumber) {
         bankService.createAccount(accountNumber);
     }
+
+    public double debit(int accountNumber, double value) {
+        return bankService.debit(accountNumber, value);
+    }
 }
