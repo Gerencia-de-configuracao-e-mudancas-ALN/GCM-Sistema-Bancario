@@ -1,7 +1,7 @@
 package imd.ufrn.backend;
 
 public class BankController {
-     private BankService bankService;
+    private BankService bankService;
 
     public BankController(BankService bankService) {
         this.bankService = bankService;
@@ -15,7 +15,11 @@ public class BankController {
         return bankService.realizeDebit(accountNumber, value);
     }
 
-    public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value){
+    public double credit(int accountNumber, double value) {
+        return bankService.realizeCredit(accountNumber, value);
+    }
+
+    public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value) {
         return bankService.realizeTransfer(originAccountNumber, destinationAccountNumber, value);
     }
 }
