@@ -13,4 +13,9 @@ public class BankRepository {
     public void saveAccount(Account account) {
         accounts.put(account.getAccountNumber(), account);
     }
+
+    public Account getAccountByAccountNumber(int accountNumber) {
+        return accounts.get(accountNumber);
+    }
+
 }

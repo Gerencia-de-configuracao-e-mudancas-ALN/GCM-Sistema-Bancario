@@ -11,4 +11,11 @@ public class BankService {
         Account account = new Account(accountNumber, 0.0);
         bankRepository.saveAccount(account);
     }
+
+    public double realizeDebit(int accountNumber, double value) {
+        Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
+        selectedAccount.setBalance(selectedAccount.getBalance() - value);
+        bankRepository.saveAccount(selectedAccount);
+        return selectedAccount.getBalance();
+    }
 }

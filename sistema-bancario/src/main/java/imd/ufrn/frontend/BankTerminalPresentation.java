@@ -12,16 +12,16 @@ public class BankTerminalPresentation {
     public static final String GREEN_BACKGROUND = "\u001B[32m";
     public static final String RED_BACKGROUND = "\u001B[31m";
 
-    public BankTerminalPresentation(BankController bankController){
+    public BankTerminalPresentation(BankController bankController) {
         this.bankController = bankController;
     }
 
-    public void Initialize(){
-        mainLoop();  
+    public void Initialize() {
+        mainLoop();
     }
-    
-    private void mainLoop(){
-        while(true){
+
+    private void mainLoop() {
+        while (true) {
 
             System.out.println("");
             System.out.println("-----------------------------------");
@@ -38,12 +38,14 @@ public class BankTerminalPresentation {
                 case 1:
                     createAccountChosen();
                     break;
-            
+                case 2:
+                    realizeDebit();
+                    break;
                 default:
                     wrongOption();
                     break;
             }
-            
+
             System.out.println("");
             System.out.println("");
             System.out.println("");
@@ -60,7 +62,7 @@ public class BankTerminalPresentation {
     private void exitChosen() {
         System.out.println("Fechando o programa...");
         try {
-            Thread.sleep(2000);            
+            Thread.sleep(2000);
         } catch (Exception e) {
         }
         System.out.println(GREEN_BACKGROUND + "Programa fechado com sucesso!" + ANSI_RESET);
@@ -68,24 +70,35 @@ public class BankTerminalPresentation {
         System.exit(0);
     }
 
-    public int showOptionsAndReturnOption(){
+    public int showOptionsAndReturnOption() {
         System.out.println("Escolha uma opção: ");
         System.out.println("    0- Sair");
         System.out.println("    1- Criar conta");
+        System.out.println("    2- Realizar débito");
 
         return scanner.nextInt();
     }
 
-    public void createAccountChosen(){
+    public void createAccountChosen() {
         System.out.println("Para criar uma conta digite o número da conta: ");
         int accountNumber = scanner.nextInt();
         System.out.println("Criando conta de número: " + accountNumber);
         try {
-            Thread.sleep(2000);            
+            Thread.sleep(2000);
         } catch (Exception e) {
 
         }
         bankController.createAccount(accountNumber);
         System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
     }
+
+    public void realizeDebit() {
+        System.out.println("Digite o número da conta que deseja realizar o débito: ");
+        int accountNumber = scanner.nextInt();
+        System.out.printf("Digite quanto deseja debitar da conta %d: ", accountNumber);
+        double valueToDebit = scanner.nextDouble();
+        double newBalance = bankController.debit(accountNumber, valueToDebit);
+        System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance);
+    }
+
 }
