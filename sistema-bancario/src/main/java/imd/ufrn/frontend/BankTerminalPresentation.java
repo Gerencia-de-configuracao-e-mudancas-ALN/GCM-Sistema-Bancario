@@ -41,6 +41,9 @@ public class BankTerminalPresentation {
                 case 2:
                     realizeDebit();
                     break;
+                case 3:
+                    realizeCredit();
+                    break;
                 case 4:
                     realizeTransfer();
                     break;
@@ -78,6 +81,7 @@ public class BankTerminalPresentation {
         System.out.println("    0- Sair");
         System.out.println("    1- Criar conta");
         System.out.println("    2- Realizar débito");
+        System.out.println("    3- Realizar crédito");
         System.out.println("    4- Realizar transferência");
 
         return scanner.nextInt();
@@ -103,6 +107,15 @@ public class BankTerminalPresentation {
         double valueToDebit = scanner.nextDouble();
         double newBalance = bankController.debit(accountNumber, valueToDebit);
         System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance);
+    }
+
+    public void realizeCredit() {
+        System.out.println("Digite o número da conta em que deseja realizar o crédito: ");
+        int accountNumber = scanner.nextInt();
+        System.out.printf("Digite quanto deseja creditar na conta %d: ", accountNumber);
+        double valueToCredit = scanner.nextDouble();
+        double newBalance = bankController.credit(accountNumber, valueToCredit);
+        System.out.printf("Valor creditado com sucesso, saldo atual: %.2f: ", newBalance);
     }
 
     public void realizeTransfer() {
