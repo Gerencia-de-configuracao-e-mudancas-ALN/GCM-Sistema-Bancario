@@ -22,4 +22,8 @@ public class BankController {
     public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value) {
         return bankService.realizeTransfer(originAccountNumber, destinationAccountNumber, value);
     }
+
+    public double checkBalance(int accountNumber) {
+        return bankService.checkBalance(accountNumber);
+    }
 }

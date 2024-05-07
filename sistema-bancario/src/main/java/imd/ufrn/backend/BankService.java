@@ -31,4 +31,9 @@ public class BankService {
         realizeCredit(destinationAccountNumber, value);
         return true;
     }
+
+    public double checkBalance(int accountNumber) {
+        Account account = bankRepository.getAccountByAccountNumber(accountNumber);
+        return account.getBalance();
+    }
 }
