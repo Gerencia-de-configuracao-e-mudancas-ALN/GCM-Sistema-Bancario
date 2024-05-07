@@ -44,6 +44,9 @@ public class BankTerminalPresentation {
                 case 4:
                     realizeTransfer();
                     break;
+                case 5:
+                    checkBalance();
+                    break;
                 default:
                     wrongOption();
                     break;
@@ -56,6 +59,13 @@ public class BankTerminalPresentation {
             scanner.nextLine();
             scanner.nextLine();
         }
+    }
+
+    private void checkBalance() {
+        System.out.println("Digite o número da conta que deseja consultar o saldo: ");
+        int accountNumber = scanner.nextInt();
+        double balance = bankController.checkBalance(accountNumber);
+        System.out.printf("saldo atual da conta número " + accountNumber + ": %.2f: \n", balance);
     }
 
     private void wrongOption() {
@@ -79,6 +89,7 @@ public class BankTerminalPresentation {
         System.out.println("    1- Criar conta");
         System.out.println("    2- Realizar débito");
         System.out.println("    4- Realizar transferência");
+        System.out.println("    5- Consultar saldo");
 
         return scanner.nextInt();
     }
