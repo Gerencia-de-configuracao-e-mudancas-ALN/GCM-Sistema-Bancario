@@ -3,7 +3,7 @@ package imd.ufrn.frontend;
 import java.util.Optional;
 import java.util.Scanner;
 
-import imd.ufrn.backend.BankController;
+import imd.ufrn.backend.BankController; 
 
 public class BankTerminalPresentation {
     Scanner scanner = new Scanner(System.in);
@@ -51,6 +51,9 @@ public class BankTerminalPresentation {
                 case 5:
                     checkBalance();
                     break;
+                case 6:
+                    runPayFees();
+                    break;
                 default:
                     wrongOption();
                     break;
@@ -95,6 +98,7 @@ public class BankTerminalPresentation {
         System.out.println("    3- Realizar crédito");
         System.out.println("    4- Realizar transferência");
         System.out.println("    5- Consultar saldo");
+        System.out.println("    6- Render juros");
 
         return scanner.nextInt();
     }
@@ -102,14 +106,23 @@ public class BankTerminalPresentation {
     public void createAccountChosen() {
         System.out.println("Para criar uma conta digite o número da conta: ");
         int accountNumber = scanner.nextInt();
+        System.out.println("Digite o tipo da conta:");
+        System.out.println("    1- Conta normal");
+        System.out.println("    2- Conta poupança");
+        int accountType = scanner.nextInt();
         System.out.println("Criando conta de número: " + accountNumber);
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
 
         }
-        bankController.createAccount(accountNumber);
-        System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
+        boolean isSuccess = bankController.createAccount(accountNumber, accountType);
+        if (isSuccess) {
+            System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
+        } else {
+            System.out.println(RED_BACKGROUND
+                    + "Falha ao criar conta, verifique o tipo da conta inserido e tente novamente." + ANSI_RESET);
+        }
     }
 
     public void realizeDebit() {
@@ -148,5 +161,12 @@ public class BankTerminalPresentation {
         } else {
             System.out.println("Falha ao transferir. A conta de origem não possui saldo o suficiente.");
         }
+    }
+
+    public void runPayFees() {
+        System.out.println("Digite a taxa em porcentagem que deseja aplicar(Exemplo 5,5):");
+        double fee = scanner.nextDouble();
+        bankController.payFees(fee);
+        System.out.println("Taxa aplicada com sucesso em todas as contas do tipo poupança.");
     }
 }
