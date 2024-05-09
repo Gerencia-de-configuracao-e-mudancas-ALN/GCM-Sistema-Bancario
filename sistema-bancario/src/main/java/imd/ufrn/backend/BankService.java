@@ -1,5 +1,7 @@
 package imd.ufrn.backend;
 
+import java.util.Optional;
+
 public class BankService {
     private BankRepository bankRepository;
 
@@ -12,11 +14,17 @@ public class BankService {
         bankRepository.saveAccount(account);
     }
 
-    public double realizeDebit(int accountNumber, double value) {
+    public Optional<Double> realizeDebit(int accountNumber, double value) {
         Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
-        selectedAccount.setBalance(selectedAccount.getBalance() - value);
+        double accountBalance = selectedAccount.getBalance();
+
+        if (accountBalance < value) {
+            return Optional.empty();
+        }
+
+        selectedAccount.setBalance(accountBalance - value);
         bankRepository.saveAccount(selectedAccount);
-        return selectedAccount.getBalance();
+        return Optional.of(selectedAccount.getBalance());
     }
 
     public double realizeCredit(int accountNumber, double value) {
@@ -26,9 +34,14 @@ public class BankService {
         return selectedAccount.getBalance();
     }
 
-    public boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
-        realizeDebit(originAccountNumber, value);
+    public Boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
+        Optional<Double> debit = realizeDebit(originAccountNumber, value);
+        if (debit.isEmpty()) {
+            return false;
+        }
+
         realizeCredit(destinationAccountNumber, value);
+
         return true;
     }
 

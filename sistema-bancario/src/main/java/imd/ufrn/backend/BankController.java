@@ -1,5 +1,7 @@
 package imd.ufrn.backend;
 
+import java.util.Optional;
+
 public class BankController {
     private BankService bankService;
 
@@ -11,7 +13,7 @@ public class BankController {
         bankService.createAccount(accountNumber);
     }
 
-    public double debit(int accountNumber, double value) {
+    public Optional<Double> debit(int accountNumber, double value) {
         return bankService.realizeDebit(accountNumber, value);
     }
 
