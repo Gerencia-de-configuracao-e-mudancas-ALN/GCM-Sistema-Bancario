@@ -1,5 +1,6 @@
 package imd.ufrn.frontend;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 import imd.ufrn.backend.BankController;
@@ -116,8 +117,13 @@ public class BankTerminalPresentation {
         int accountNumber = scanner.nextInt();
         System.out.printf("Digite quanto deseja debitar da conta %d: ", accountNumber);
         double valueToDebit = scanner.nextDouble();
-        double newBalance = bankController.debit(accountNumber, valueToDebit);
-        System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance);
+
+        Optional<Double> newBalance = bankController.debit(accountNumber, valueToDebit);
+        if (newBalance.isEmpty()) {
+            System.out.printf("Não foi possível realizar a operação pois a conta não possui saldo suficiente");
+        } else {
+            System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance.get());
+        }
     }
 
     public void realizeCredit() {
@@ -140,7 +146,7 @@ public class BankTerminalPresentation {
         if (isSuccess) {
             System.out.println("Valor transferido com sucesso!");
         } else {
-            System.out.println("Falha ao transferir");
+            System.out.println("Falha ao transferir. A conta de origem não possui saldo o suficiente.");
         }
     }
 }
