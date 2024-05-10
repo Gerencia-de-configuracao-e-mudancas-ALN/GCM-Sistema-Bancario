@@ -9,8 +9,8 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    public void createAccount(int accountNumber) {
-        bankService.createAccount(accountNumber);
+    public boolean createAccount(int accountNumber, int accountType) {
+        return bankService.createAccount(accountNumber, accountType);
     }
 
     public Optional<Double> debit(int accountNumber, double value) {
@@ -18,7 +18,7 @@ public class BankController {
     }
 
     public double credit(int accountNumber, double value) {
-        return bankService.realizeCredit(accountNumber, value);
+        return bankService.realizeCredit(accountNumber, value, false);
     }
 
     public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value) {
