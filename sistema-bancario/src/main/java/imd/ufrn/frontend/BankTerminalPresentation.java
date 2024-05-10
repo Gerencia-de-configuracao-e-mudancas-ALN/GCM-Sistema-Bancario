@@ -75,6 +75,12 @@ public class BankTerminalPresentation {
         System.out.printf("saldo atual da conta número " + accountNumber + ": %.2f: \n", balance);
     }
 
+    private boolean isNotPositive(double value) {
+        if (value < 0)
+            return true;
+        return false;
+    }
+
     private void wrongOption() {
         System.out.println(RED_BACKGROUND + "Opção inválida. Tente novamente." + ANSI_RESET);
     }
@@ -133,6 +139,11 @@ public class BankTerminalPresentation {
         System.out.printf("Digite quanto deseja debitar da conta %d: ", accountNumber);
         double valueToDebit = scanner.nextDouble();
 
+        if (isNotPositive(valueToDebit)) {
+            System.out.println(RED_BACKGROUND + "O valor não pode ser negativo." + ANSI_RESET);
+            return;
+        }
+
         Optional<Double> newBalance = bankController.debit(accountNumber, valueToDebit);
         if (newBalance.isEmpty()) {
             System.out.printf(RED_BACKGROUND
@@ -148,6 +159,12 @@ public class BankTerminalPresentation {
         int accountNumber = scanner.nextInt();
         System.out.printf("Digite quanto deseja creditar na conta %d: ", accountNumber);
         double valueToCredit = scanner.nextDouble();
+
+        if (isNotPositive(valueToCredit)) {
+            System.out.println(RED_BACKGROUND + "O valor não pode ser negativo." + ANSI_RESET);
+            return;
+        }
+
         double newBalance = bankController.credit(accountNumber, valueToCredit);
         System.out.printf(GREEN_BACKGROUND + "Valor creditado com sucesso, saldo atual: %.2f: " + ANSI_RESET,
                 newBalance);
@@ -160,6 +177,12 @@ public class BankTerminalPresentation {
         int destinationAccountNumber = scanner.nextInt();
         System.out.println("Digite o valor a ser transferido: ");
         double valueToTransfer = scanner.nextDouble();
+
+        if (isNotPositive(valueToTransfer)) {
+            System.out.println(RED_BACKGROUND + "O valor não pode ser negativo." + ANSI_RESET);
+            return;
+        }
+
         boolean isSuccess = bankController.transfer(originAccountNumber, destinationAccountNumber, valueToTransfer);
         if (isSuccess) {
             System.out.println(GREEN_BACKGROUND + "Valor transferido com sucesso!" + ANSI_RESET);
