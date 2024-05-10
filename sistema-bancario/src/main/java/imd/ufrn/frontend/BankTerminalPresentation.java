@@ -51,6 +51,9 @@ public class BankTerminalPresentation {
                 case 5:
                     checkBalance();
                     break;
+                case 6:
+                    runPayFees();
+                    break;
                 default:
                     wrongOption();
                     break;
@@ -95,6 +98,7 @@ public class BankTerminalPresentation {
         System.out.println("    3- Realizar crédito");
         System.out.println("    4- Realizar transferência");
         System.out.println("    5- Consultar saldo");
+        System.out.println("    6- Render juros");
 
         return scanner.nextInt();
     }
@@ -104,6 +108,7 @@ public class BankTerminalPresentation {
         int accountNumber = scanner.nextInt();
         System.out.println("Digite o tipo da conta:");
         System.out.println("    1- Conta normal");
+        System.out.println("    2- Conta poupança");
         System.out.println("    3- Conta Bônus");
         int accountType = scanner.nextInt();
         System.out.println("Criando conta de número: " + accountNumber);
@@ -130,9 +135,11 @@ public class BankTerminalPresentation {
 
         Optional<Double> newBalance = bankController.debit(accountNumber, valueToDebit);
         if (newBalance.isEmpty()) {
-            System.out.printf("Não foi possível realizar a operação pois a conta não possui saldo suficiente");
+            System.out.printf(RED_BACKGROUND
+                    + "Não foi possível realizar a operação pois a conta não possui saldo suficiente" + ANSI_RESET);
         } else {
-            System.out.printf("Valor debitado com sucesso, saldo atual: %.2f: ", newBalance.get());
+            System.out.printf(GREEN_BACKGROUND + "Valor debitado com sucesso, saldo atual: %.2f: " + ANSI_RESET,
+                    newBalance.get());
         }
     }
 
@@ -142,7 +149,8 @@ public class BankTerminalPresentation {
         System.out.printf("Digite quanto deseja creditar na conta %d: ", accountNumber);
         double valueToCredit = scanner.nextDouble();
         double newBalance = bankController.credit(accountNumber, valueToCredit);
-        System.out.printf("Valor creditado com sucesso, saldo atual: %.2f: ", newBalance);
+        System.out.printf(GREEN_BACKGROUND + "Valor creditado com sucesso, saldo atual: %.2f: " + ANSI_RESET,
+                newBalance);
     }
 
     public void realizeTransfer() {
@@ -154,9 +162,18 @@ public class BankTerminalPresentation {
         double valueToTransfer = scanner.nextDouble();
         boolean isSuccess = bankController.transfer(originAccountNumber, destinationAccountNumber, valueToTransfer);
         if (isSuccess) {
-            System.out.println("Valor transferido com sucesso!");
+            System.out.println(GREEN_BACKGROUND + "Valor transferido com sucesso!" + ANSI_RESET);
         } else {
-            System.out.println("Falha ao transferir. A conta de origem não possui saldo o suficiente.");
+            System.out.println(RED_BACKGROUND + "Falha ao transferir. A conta de origem não possui saldo o suficiente."
+                    + ANSI_RESET);
         }
+    }
+
+    public void runPayFees() {
+        System.out.println("Digite a taxa em porcentagem que deseja aplicar(Exemplo 5,5):");
+        double fee = scanner.nextDouble();
+        bankController.payFees(fee);
+        System.out.println(
+                GREEN_BACKGROUND + "Taxa aplicada com sucesso em todas as contas do tipo poupança." + ANSI_RESET);
     }
 }
