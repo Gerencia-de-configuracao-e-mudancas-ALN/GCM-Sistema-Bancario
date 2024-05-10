@@ -17,6 +17,8 @@ public class BankService {
             account = new Account(accountNumber, 0.0);
         } else if (accountType == 2) {
             account = new SavingsAccount(accountNumber, 0.0);
+        } else if (accountType == 3) {
+            account = new BonusAccount(accountNumber, 0.0, 10);
         } else {
             return false;
         }
@@ -38,21 +40,27 @@ public class BankService {
         return Optional.of(selectedAccount.getBalance());
     }
 
-    public double realizeCredit(int accountNumber, double value) {
+    public double realizeCredit(int accountNumber, double value, boolean isTransfer) {
         Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
         selectedAccount.setBalance(selectedAccount.getBalance() + value);
+        if (selectedAccount instanceof BonusAccount & !isTransfer) {
+            int actualPunctuation = ((BonusAccount) selectedAccount).getPunctuation();
+            ((BonusAccount) selectedAccount).setPunctuation(actualPunctuation + (int) (value / 100));
+        }
         bankRepository.saveAccount(selectedAccount);
         return selectedAccount.getBalance();
     }
 
-    public Boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
-        Optional<Double> debit = realizeDebit(originAccountNumber, value);
-        if (debit.isEmpty()) {
-            return false;
+    public boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
+        realizeDebit(originAccountNumber, value);
+        realizeCredit(destinationAccountNumber, value, true);
+        Account destinationAccount = bankRepository.getAccountByAccountNumber(destinationAccountNumber);
+
+        if (destinationAccount instanceof BonusAccount) {
+            int punctuation = ((BonusAccount) destinationAccount).getPunctuation();
+            ((BonusAccount) destinationAccount).setPunctuation(punctuation + (int) (value / 200));
         }
-
-        realizeCredit(destinationAccountNumber, value);
-
+        bankRepository.saveAccount(destinationAccount);
         return true;
     }
 

@@ -18,7 +18,7 @@ public class BankController {
     }
 
     public double credit(int accountNumber, double value) {
-        return bankService.realizeCredit(accountNumber, value);
+        return bankService.realizeCredit(accountNumber, value, false);
     }
 
     public boolean transfer(int originAccountNumber, int destinationAccountNumber, double value) {

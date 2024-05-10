@@ -109,6 +109,7 @@ public class BankTerminalPresentation {
         System.out.println("Digite o tipo da conta:");
         System.out.println("    1- Conta normal");
         System.out.println("    2- Conta poupança");
+        System.out.println("    3- Conta Bônus");
         int accountType = scanner.nextInt();
         System.out.println("Criando conta de número: " + accountNumber);
         try {
@@ -116,6 +117,7 @@ public class BankTerminalPresentation {
         } catch (Exception e) {
 
         }
+
         boolean isSuccess = bankController.createAccount(accountNumber, accountType);
         if (isSuccess) {
             System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
