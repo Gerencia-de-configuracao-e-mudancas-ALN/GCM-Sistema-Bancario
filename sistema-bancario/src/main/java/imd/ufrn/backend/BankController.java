@@ -9,8 +9,8 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    public boolean createAccount(int accountNumber, int accountType) {
-        return bankService.createAccount(accountNumber, accountType);
+    public boolean createAccount(int accountNumber, int accountType, double balance) {
+        return bankService.createAccount(accountNumber, accountType, balance);
     }
 
     public Optional<Double> debit(int accountNumber, double value) {
