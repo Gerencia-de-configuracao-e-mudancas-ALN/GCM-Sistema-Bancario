@@ -1,6 +1,5 @@
 package imd.ufrn.backend;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,4 @@ public class BankRepository {
         return accounts.get(accountNumber);
     }
 
-    public Map<Integer, Account> findAll() {
-        return Collections.unmodifiableMap(new HashMap<>(accounts));
-    }
 }
