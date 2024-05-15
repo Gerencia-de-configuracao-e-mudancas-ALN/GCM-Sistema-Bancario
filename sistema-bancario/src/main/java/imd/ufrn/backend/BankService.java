@@ -9,8 +9,8 @@ public class BankService {
         this.bankRepository = bankRepository;
     }
 
-    public void createAccount(int accountNumber) {
-        Account account = new Account(accountNumber, 0.0);
+    public void createAccount(int accountNumber, double balance) {
+        Account account = new Account(accountNumber, balance);
         bankRepository.saveAccount(account);
     }
 

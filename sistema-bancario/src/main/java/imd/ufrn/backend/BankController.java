@@ -9,8 +9,8 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    public void createAccount(int accountNumber) {
-        bankService.createAccount(accountNumber);
+    public void createAccount(int accountNumber, double balance) {
+        bankService.createAccount(accountNumber, balance);
     }
 
     public Optional<Double> debit(int accountNumber, double value) {

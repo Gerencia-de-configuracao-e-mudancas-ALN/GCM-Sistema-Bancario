@@ -108,13 +108,17 @@ public class BankTerminalPresentation {
     public void createAccountChosen() {
         System.out.println("Para criar uma conta digite o número da conta: ");
         int accountNumber = scanner.nextInt();
+        double balance = 0.0; 
+        System.out.println("Digite o saldo inicial:");
+        balance = scanner.nextDouble(); 
+
         System.out.println("Criando conta de número: " + accountNumber);
         try {
             Thread.sleep(2000);
         } catch (Exception e) {
 
         }
-        bankController.createAccount(accountNumber);
+        bankController.createAccount(accountNumber, balance);
         System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
     }
 
