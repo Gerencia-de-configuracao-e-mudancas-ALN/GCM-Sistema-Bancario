@@ -118,6 +118,10 @@ public class BankTerminalPresentation {
         System.out.println("    3- Conta Bônus");
         int accountType = scanner.nextInt();
         double balance = 0.0;
+        if (accountType == 1 || accountType == 2) {
+            System.out.println("Digite o saldo inicial:");
+            balance = scanner.nextDouble();
+        }
         System.out.println("Digite o saldo inicial:");
         balance = scanner.nextDouble();
 

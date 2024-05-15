@@ -30,12 +30,19 @@ public class BankService {
     public Optional<Double> realizeDebit(int accountNumber, double value) {
         Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
         double accountBalance = selectedAccount.getBalance();
+        double newBalance = accountBalance - value;
 
-        if (accountBalance < value) {
-            return Optional.empty();
+        if (selectedAccount instanceof SavingsAccount) {
+            if (accountBalance < value) {
+                return Optional.empty();
+            }
+        } else {
+            if (newBalance < -1000) {
+                return Optional.empty();
+            }
         }
 
-        selectedAccount.setBalance(accountBalance - value);
+        selectedAccount.setBalance(newBalance);
         bankRepository.saveAccount(selectedAccount);
         return Optional.of(selectedAccount.getBalance());
     }
