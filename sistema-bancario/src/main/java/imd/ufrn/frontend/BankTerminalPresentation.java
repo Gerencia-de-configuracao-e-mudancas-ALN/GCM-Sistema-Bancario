@@ -108,9 +108,14 @@ public class BankTerminalPresentation {
     public void createAccountChosen() {
         System.out.println("Para criar uma conta digite o número da conta: ");
         int accountNumber = scanner.nextInt();
-        double balance = 0.0; 
+        System.out.println("Digite o tipo da conta:");
+        System.out.println("    1- Conta normal");
+        System.out.println("    2- Conta poupança");
+        System.out.println("    3- Conta Bônus");
+        int accountType = scanner.nextInt();
+        double balance = 0.0;
         System.out.println("Digite o saldo inicial:");
-        balance = scanner.nextDouble(); 
+        balance = scanner.nextDouble();
 
         System.out.println("Criando conta de número: " + accountNumber);
         try {
@@ -118,8 +123,13 @@ public class BankTerminalPresentation {
         } catch (Exception e) {
 
         }
-        bankController.createAccount(accountNumber, balance);
-        System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
+        boolean isSuccess = bankController.createAccount(accountNumber, accountType, balance);
+        if (isSuccess) {
+            System.out.println(GREEN_BACKGROUND + "Conta criada com sucesso!" + ANSI_RESET);
+        } else {
+            System.out.println(RED_BACKGROUND
+                    + "Falha ao criar conta, verifique o tipo da conta inserido e tente novamente." + ANSI_RESET);
+        }
     }
 
     public void realizeDebit() {
