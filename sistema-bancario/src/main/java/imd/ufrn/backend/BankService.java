@@ -10,15 +10,15 @@ public class BankService {
         this.bankRepository = bankRepository;
     }
 
-    public boolean createAccount(int accountNumber, int accountType) {
+    public boolean createAccount(int accountNumber, int accountType, double balance) {
         Account account;
 
         if (accountType == 1) {
-            account = new Account(accountNumber, 0.0);
+            account = new Account(accountNumber, balance);
         } else if (accountType == 2) {
-            account = new SavingsAccount(accountNumber, 0.0);
+            account = new SavingsAccount(accountNumber, balance);
         } else if (accountType == 3) {
-            account = new BonusAccount(accountNumber, 0.0, 10);
+            account = new BonusAccount(accountNumber, balance, 10);
         } else {
             return false;
         }
