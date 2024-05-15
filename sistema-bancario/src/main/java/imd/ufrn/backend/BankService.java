@@ -1,6 +1,5 @@
 package imd.ufrn.backend;
 
-import java.util.Map;
 import java.util.Optional;
 
 public class BankService {
@@ -59,13 +58,16 @@ public class BankService {
     }
 
     public boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
-        realizeDebit(originAccountNumber, value);
+        Optional<Double> debit = realizeDebit(originAccountNumber, value);
+        if (debit.isEmpty()) {
+            return false;
+        }
         realizeCredit(destinationAccountNumber, value, true);
         Account destinationAccount = bankRepository.getAccountByAccountNumber(destinationAccountNumber);
 
         if (destinationAccount instanceof BonusAccount) {
             int punctuation = ((BonusAccount) destinationAccount).getPunctuation();
-            ((BonusAccount) destinationAccount).setPunctuation(punctuation + (int) (value / 200));
+            ((BonusAccount) destinationAccount).setPunctuation(punctuation + (int) (value / 150));
         }
         bankRepository.saveAccount(destinationAccount);
         return true;
@@ -74,17 +76,5 @@ public class BankService {
     public double checkBalance(int accountNumber) {
         Account account = bankRepository.getAccountByAccountNumber(accountNumber);
         return account.getBalance();
-    }
-
-    public void payFees(double fee) {
-        Map<Integer, Account> allAccounts = bankRepository.findAll();
-        for (Map.Entry<Integer, Account> entry : allAccounts.entrySet()) {
-            Account account = entry.getValue();
-            if (account instanceof SavingsAccount) {
-                double accountBalance = account.getBalance();
-                account.setBalance(accountBalance + (accountBalance * fee / 100));
-                bankRepository.saveAccount(account);
-            }
-        }
     }
 }

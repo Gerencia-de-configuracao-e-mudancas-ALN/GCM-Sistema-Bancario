@@ -28,8 +28,4 @@ public class BankController {
     public double checkBalance(int accountNumber) {
         return bankService.checkBalance(accountNumber);
     }
-
-    public void payFees(double fee) {
-        bankService.payFees(fee);
-    }
 }
