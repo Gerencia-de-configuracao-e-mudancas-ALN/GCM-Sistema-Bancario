@@ -32,4 +32,9 @@ public class BankController {
     public void payFees(double fee) {
         bankService.payFees(fee);
     }
+
+    public Account getAccountByNumber(int accountNumber) {
+        return bankService.getAccountByNumber(accountNumber);
+    }
+    
 }
