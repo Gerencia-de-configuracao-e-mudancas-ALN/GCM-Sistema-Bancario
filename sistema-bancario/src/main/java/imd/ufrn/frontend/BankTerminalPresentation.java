@@ -122,8 +122,6 @@ public class BankTerminalPresentation {
             System.out.println("Digite o saldo inicial:");
             balance = scanner.nextDouble();
         }
-        System.out.println("Digite o saldo inicial:");
-        balance = scanner.nextDouble();
 
         System.out.println("Criando conta de número: " + accountNumber);
         try {
