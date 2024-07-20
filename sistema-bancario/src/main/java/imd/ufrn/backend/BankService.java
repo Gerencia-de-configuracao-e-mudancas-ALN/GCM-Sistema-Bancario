@@ -87,4 +87,8 @@ public class BankService {
             }
         }
     }
+
+    public Account getAccountByNumber(int accountNumber) {
+        return bankRepository.getAccountByAccountNumber(accountNumber);
+    }
 }
