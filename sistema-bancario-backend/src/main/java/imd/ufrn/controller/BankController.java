@@ -74,7 +74,7 @@ public class BankController {
                 transferRequest.getAmount());
     }
 
-    @PutMapping("conta/rendimento")
+    @PutMapping("/conta/rendimento")
     public void payFees(@RequestBody Double fee) {
         bankService.payFees(fee);
     }

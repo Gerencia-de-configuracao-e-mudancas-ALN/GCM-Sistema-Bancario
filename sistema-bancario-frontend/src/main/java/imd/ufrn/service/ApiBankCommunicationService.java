@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
-import imd.ufrn.model.Account;
 import imd.ufrn.model.api.AccountRequest;
 import imd.ufrn.model.api.AccountResponse;
 import imd.ufrn.model.api.TransferRequest;
@@ -91,7 +90,8 @@ public class ApiBankCommunicationService {
         restClient.put()
                 .uri(baseUrl + "/conta/rendimento")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(fee);
+                .body(fee)
+                .retrieve();
     }
 
 }
