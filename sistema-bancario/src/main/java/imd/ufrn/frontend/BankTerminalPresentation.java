@@ -3,7 +3,10 @@ package imd.ufrn.frontend;
 import java.util.Optional;
 import java.util.Scanner;
 
+import imd.ufrn.backend.Account;
 import imd.ufrn.backend.BankController;
+import imd.ufrn.backend.BonusAccount;
+import imd.ufrn.backend.SavingsAccount;
 
 public class BankTerminalPresentation {
     Scanner scanner = new Scanner(System.in);
@@ -53,6 +56,9 @@ public class BankTerminalPresentation {
                     break;
                 case 6:
                     runPayFees();
+                    break;
+                case 7:
+                    consultAccount();
                     break;
                 default:
                     wrongOption();
@@ -105,6 +111,7 @@ public class BankTerminalPresentation {
         System.out.println("    4- Realizar transferência");
         System.out.println("    5- Consultar saldo");
         System.out.println("    6- Render juros");
+        System.out.println("    7- Consultar Conta");
 
         return scanner.nextInt();
     }
@@ -122,8 +129,6 @@ public class BankTerminalPresentation {
             System.out.println("Digite o saldo inicial:");
             balance = scanner.nextDouble();
         }
-        System.out.println("Digite o saldo inicial:");
-        balance = scanner.nextDouble();
 
         System.out.println("Criando conta de número: " + accountNumber);
         try {
@@ -205,5 +210,25 @@ public class BankTerminalPresentation {
         bankController.payFees(fee);
         System.out.println(
                 GREEN_BACKGROUND + "Taxa aplicada com sucesso em todas as contas do tipo poupança." + ANSI_RESET);
+    }
+
+    public void consultAccount() {
+        System.out.println("Digite o número da conta:");
+        int accountNumber = scanner.nextInt();
+
+        Account account = bankController.getAccountByNumber(accountNumber);
+
+        if (account != null) {
+            System.out.println("Tipo de Conta: " + (account instanceof SavingsAccount ? "Conta Poupança" :
+                    (account instanceof BonusAccount ? "Conta Bônus" : "Conta Normal")));
+            System.out.println("Número da Conta: " + account.getAccountNumber());
+            System.out.println("Saldo: " + account.getBalance());
+
+            if (account instanceof BonusAccount) {
+                System.out.println("Bônus: " + ((BonusAccount) account).getPunctuation());
+            }
+        } else {
+            System.out.println("Conta não encontrada!");
+        }
     }
 }

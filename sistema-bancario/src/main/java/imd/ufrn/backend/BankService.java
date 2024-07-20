@@ -65,7 +65,7 @@ public class BankService {
 
         if (destinationAccount instanceof BonusAccount) {
             int punctuation = ((BonusAccount) destinationAccount).getPunctuation();
-            ((BonusAccount) destinationAccount).setPunctuation(punctuation + (int) (value / 200));
+            ((BonusAccount) destinationAccount).setPunctuation(punctuation + (int) (value / 150));
         }
         bankRepository.saveAccount(destinationAccount);
         return true;
@@ -86,5 +86,9 @@ public class BankService {
                 bankRepository.saveAccount(account);
             }
         }
+    }
+
+    public Account getAccountByNumber(int accountNumber) {
+        return bankRepository.getAccountByAccountNumber(accountNumber);
     }
 }
