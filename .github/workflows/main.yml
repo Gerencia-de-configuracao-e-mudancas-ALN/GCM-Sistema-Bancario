@@ -34,4 +34,8 @@
         - name: build the app
           run: mvn -B package -DskipTests=true --file pom.xml
 
-         
+        - name: tag commit
+          uses: christophebedard/tag-version-commit@v1
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            version_tag_prefix: 'build-'
