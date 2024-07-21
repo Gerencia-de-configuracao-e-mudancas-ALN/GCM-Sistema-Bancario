@@ -35,7 +35,9 @@
           run: mvn -B package -DskipTests=true --file pom.xml
 
         - name: tag commit
-          uses: christophebedard/tag-version-commit@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            version_tag_prefix: 'build-'
+          id: create_tag
+          run: |
+            TAG_NAME="build-$(date +%s)"
+            echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
+            git tag $TAG_NAME
+            git push origin $TAG_NAME
