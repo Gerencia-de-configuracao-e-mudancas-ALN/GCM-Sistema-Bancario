@@ -42,6 +42,10 @@ public class BankService {
         double accountBalance = selectedAccount.getBalance();
         double newBalance = accountBalance - value;
 
+        if (value < 0 || newBalance < 0) {
+            return Optional.empty();
+        }
+
         if (selectedAccount instanceof SavingsAccount) {
             if (accountBalance < value) {
                 return Optional.empty();
@@ -58,6 +62,10 @@ public class BankService {
     }
 
     public double realizeCredit(int accountNumber, double value, boolean isTransfer) {
+        if (value < 0) {
+            return bankRepository.getAccountByAccountNumber(accountNumber).getBalance();
+        }
+        
         Account selectedAccount = bankRepository.getAccountByAccountNumber(accountNumber);
         selectedAccount.setBalance(selectedAccount.getBalance() + value);
         if (selectedAccount instanceof BonusAccount & !isTransfer) {
@@ -69,7 +77,15 @@ public class BankService {
     }
 
     public boolean realizeTransfer(int originAccountNumber, int destinationAccountNumber, double value) {
-        realizeDebit(originAccountNumber, value);
+        if (value <= 0) {
+            return false;
+        }
+    
+        Optional<Double> debitResult = realizeDebit(originAccountNumber, value);
+        if (!debitResult.isPresent()) {
+            return false;
+        }
+
         realizeCredit(destinationAccountNumber, value, true);
         Account destinationAccount = bankRepository.getAccountByAccountNumber(destinationAccountNumber);
 
