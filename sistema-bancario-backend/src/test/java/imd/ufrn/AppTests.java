@@ -9,5 +9,4 @@ public class AppTests {
     void contextLoads() {
 
     }
-
 }
