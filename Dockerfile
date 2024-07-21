@@ -2,8 +2,8 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-ADD sistema-bancario-backend/target/api-springboot-0.0.1-SNAPSHOT.jar /app/springapi-docker.jar
+ADD sistema-bancario-backend/target/sistema-bancario-backend-1.0-SNAPSHOT.jar   /app/bankApi-docker.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "springapi-docker.jar"]
+ENTRYPOINT ["java", "-jar", "bankApi-docker.jar"]
