@@ -1,4 +1,4 @@
-  name: build spring backend
+  name: build, test and tag for develop 
   on:
     push:
       branches:
@@ -11,6 +11,7 @@
     build-backend:
       name: build and deploy backend
       runs-on: ubuntu-20.04
+      permissions: write-all
       defaults:
         run:
           working-directory: ./sistema-bancario-backend
@@ -35,7 +36,7 @@
           run: mvn -B package -DskipTests=true --file pom.xml
 
         - name: tag commit
-          uses: christophebedard/tag-version-commit@v1
-          with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            version_tag_prefix: 'build-'
+          run: |
+            TAG_NAME="build-${{ github.run_number }}"
+            git tag $TAG_NAME
+            git push --tags
