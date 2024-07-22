@@ -37,7 +37,7 @@
         - name: compress files
           run: |
             version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-            zip -r "rc-$version.zip" sistema-bancario-backend/
+            zip -r "rc-$version.zip" target/sistema-bancario-backend-1.0-SNAPSHOT.jar
 
         - name: upload artifact
           uses: actions/upload-artifact@v3
