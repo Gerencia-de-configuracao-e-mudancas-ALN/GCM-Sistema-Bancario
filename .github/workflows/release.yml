@@ -25,8 +25,8 @@
         - name: resolve dependencies
           run: mvn clean install -DskipTests=true
 
-        # - name: Run Codacy Analysis CLI
-        #   uses: codacy/codacy-analysis-cli-action@master
+        - name: Run Codacy Analysis CLI
+          uses: codacy/codacy-analysis-cli-action@master
 
         - name: unit tests
           run: mvn -B test --file pom.xml
