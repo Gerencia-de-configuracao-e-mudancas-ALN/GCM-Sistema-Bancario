@@ -36,13 +36,7 @@
           run: mvn -B package -DskipTests=true --file pom.xml
 
         - name: tag commit
-          uses: actions/github-script@v5
-          with:
-            script: |
-              TAG_NAME="refs/tags/build-${{ github.run_number }}"
-              github.rest.git.createRef({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: $TAG_NAME,
-                sha: context.sha
-              })
+          run: |
+            TAG_NAME="build-${{ github.run_number }}"
+            git tag $TAG_NAME
+            git push --tags
