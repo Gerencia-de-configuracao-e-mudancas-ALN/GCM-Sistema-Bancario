@@ -1,4 +1,4 @@
-  name: build spring backend
+  name: build, test and tag for develop 
   on:
     push:
       branches:
@@ -8,20 +8,35 @@
         - develop
 
   jobs:
-    build-and-tag:
-      name: build and tag backend
+    build-backend:
+      name: build and deploy backend
       runs-on: ubuntu-20.04
       permissions: write-all
       defaults:
         run:
           working-directory: ./sistema-bancario-backend
-          
-      steps:
-        - name: build and test
-          uses: ./github/workflows/build.yml
 
-        - name: tag develop commit
-          uses: ./github/workflows/tagCommit.yml
+      steps:
+        - name: checkout code
+          uses: actions/checkout@v3
+
+        - name: setup jdk 17
+          uses: actions/setup-java@v3
           with:
-            tagPrefix: "build"
-    
+            distribution: 'corretto'
+            java-version: 17
+
+        - name: resolve dependencies
+          run: mvn clean install -DskipTests=true
+
+        - name: unit tests
+          run: mvn -B test --file pom.xml
+
+        - name: build the app
+          run: mvn -B package -DskipTests=true --file pom.xml
+
+        - name: tag commit
+          run: |
+            TAG_NAME="build-${{ github.run_number }}"
+            git tag $TAG_NAME
+            git push --tags
