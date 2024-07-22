@@ -39,10 +39,10 @@
           uses: actions/github-script@v5
           with:
             script: |
-              TAG_NAME="build-${{ github.run_number }}"
+              TAG_NAME="refs/tags/build-${{ github.run_number }}"
               github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'refs/tags/build-$TAG_NAME',
+                ref: $TAG_NAME,
                 sha: context.sha
               })
