@@ -42,6 +42,6 @@
               github.rest.git.createRef({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                ref: 'refs/tags/buildTest',
+                ref: 'refs/tags/build-${{ steps.date.outputs.date }}',
                 sha: context.sha
               })
