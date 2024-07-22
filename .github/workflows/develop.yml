@@ -1,0 +1,27 @@
+  name: build spring backend
+  on:
+    push:
+      branches:
+        - develop
+    pull_request:
+      branches:
+        - develop
+
+  jobs:
+    build-and-tag:
+      name: build and tag backend
+      runs-on: ubuntu-20.04
+      permissions: write-all
+      defaults:
+        run:
+          working-directory: ./sistema-bancario-backend
+          
+      steps:
+        - name: build and test
+          uses: ./github/workflows/build.yml
+
+        - name: tag develop commit
+          uses: ./github/workflows/tagCommit.yml
+          with:
+            tagPrefix: "build"
+    

@@ -1,15 +1,10 @@
   name: build spring backend
   on:
-    push:
-      branches:
-        - develop
-    pull_request:
-      branches:
-        - develop
+    workflow_call:
 
   jobs:
     build-backend:
-      name: build and deploy backend
+      name: build and test backend
       runs-on: ubuntu-20.04
       permissions: write-all
       defaults:
@@ -34,9 +29,3 @@
 
         - name: build the app
           run: mvn -B package -DskipTests=true --file pom.xml
-
-        - name: tag commit
-          run: |
-            TAG_NAME="build-${{ github.run_number }}"
-            git tag $TAG_NAME
-            git push --tags

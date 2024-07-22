@@ -1,0 +1,31 @@
+  name: generate commit tag 
+  on: 
+    workflow_call:
+        inputs:
+            tagPrefix:
+                description: "tag prefix"
+                required: true
+                type: string
+#   on:
+#     push:
+#       branches:
+#         - develop
+#     pull_request:
+#       branches:
+#         - develop
+
+  jobs:
+    generate-tag:
+      name: generate commit tag 
+      runs-on: ubuntu-20.04
+      permissions: write-all
+      defaults:
+        run:
+          working-directory: ./sistema-bancario-backend
+
+      steps:
+        - name: tag commit
+          run: |
+            TAG_NAME="${{inputs.tagPrefix}}-${{ github.run_number }}"
+            git tag $TAG_NAME
+            git push --tags
