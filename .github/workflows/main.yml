@@ -11,6 +11,7 @@
     build-backend:
       name: build and deploy backend
       runs-on: ubuntu-20.04
+      permissions: write-all
       defaults:
         run:
           working-directory: ./sistema-bancario-backend
