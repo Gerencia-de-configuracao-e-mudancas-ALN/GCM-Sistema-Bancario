@@ -1,10 +1,11 @@
-  name: build spring backend
+  name: build, run static analysis and test for release 
   on:
-    workflow_call:
-
+    push:
+        tags: 
+          - 'rc-*'
   jobs:
     build-backend:
-      name: build and test backend
+      name: build and deploy backend
       runs-on: ubuntu-20.04
       permissions: write-all
       defaults:
@@ -23,6 +24,9 @@
 
         - name: resolve dependencies
           run: mvn clean install -DskipTests=true
+
+        - name: Run Codacy Analysis CLI
+          uses: codacy/codacy-analysis-cli-action@master
 
         - name: unit tests
           run: mvn -B test --file pom.xml
