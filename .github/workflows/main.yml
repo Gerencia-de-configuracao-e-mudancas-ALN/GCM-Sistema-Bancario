@@ -35,11 +35,7 @@
           run: mvn -B package -DskipTests=true --file pom.xml
 
         - name: tag commit
-          id: create_tag
-          run: |
-            TAG_NAME="build-$(date +%s)"
-            echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
-            git config --global user.email "neylanepl@gmail.com"
-            git config --global user.name "Neylane Lopes"
-            git tag $TAG_NAME
-            git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_KEY }}@github.com/neylanepl/GCM-Sistema-Bancario.git $TAG_NAME
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ steps.date.outputs.date }}
