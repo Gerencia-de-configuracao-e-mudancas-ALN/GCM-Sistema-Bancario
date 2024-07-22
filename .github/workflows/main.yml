@@ -42,4 +42,4 @@
             git config --global user.email "neylanepl@gmail.com"
             git config --global user.name "Neylane Lopes"
             git tag $TAG_NAME
-            git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_KEY }}@github.com/<your-username>/<your-repo>.git $TAG_NAME
+            git push https://x-access-token:${{ secrets.ACTIONS_DEPLOY_KEY }}@github.com/<neylanepl>/<Gerencia-de-configuracao-e-mudancas-ALN/GCM-Sistema-Bancario>.git $TAG_NAME
