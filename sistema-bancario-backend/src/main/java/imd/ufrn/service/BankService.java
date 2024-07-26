@@ -24,7 +24,7 @@ public class BankService {
         Account account;
 
         if (accountType == 1) {
-            account = new Account(accountNumber, balance);
+            account = new SavingsAccount(accountNumber, balance);
         } else if (accountType == 2) {
             account = new SavingsAccount(accountNumber, balance);
         } else if (accountType == 3) {
