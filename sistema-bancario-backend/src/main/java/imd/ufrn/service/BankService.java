@@ -30,7 +30,7 @@ public class BankService {
         } else if (accountType == 3) {
             account = new BonusAccount(accountNumber, balance, 10);
         } else {
-            return false;
+            return false
         }
 
         bankRepository.saveAccount(account);
