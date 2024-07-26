@@ -2,7 +2,7 @@
   on:
     push:
         tags: 
-          - 'rc-*'
+          - 'rc-*.*'
   jobs:
     build-backend:
       name: build and static analysis backend
