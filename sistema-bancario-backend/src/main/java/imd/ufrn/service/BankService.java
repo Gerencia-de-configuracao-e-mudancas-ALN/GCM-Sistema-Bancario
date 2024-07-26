@@ -50,7 +50,12 @@ public class BankService {
             if (accountBalance < value) {
                 return Optional.empty();
             }
-        } else {
+        } else if (selectedAccount instanceof BonusAccount) {
+            if(newBalance < -2000){
+                return Optional.empty();
+            }
+        }
+        else {
             if (newBalance < -1000) {
                 return Optional.empty();
             }
