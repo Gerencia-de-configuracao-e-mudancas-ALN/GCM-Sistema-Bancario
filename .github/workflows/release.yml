@@ -39,8 +39,11 @@
         #     version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
         #     zip -r "rc-$version.zip" target/sistema-bancario-backend-1.0-SNAPSHOT.jar
 
+        - name: compress files
+          run: cd .. && git archive --format=zip --output ./projetogcm.zip HEAD
+
         - name: upload artifact
           uses: actions/upload-artifact@v3
           with: 
-            name: projetogcm.jar
-            path: "sistema-bancario-backend/target/sistema-bancario-backend-1.0-SNAPSHOT.jar"
+            name: projetogcm.zip
+            path: "projetogcm.zip"
